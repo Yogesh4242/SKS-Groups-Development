@@ -1,1 +1,0 @@
-This is a Development Repo used for the devops of SKS-Groups.com 
