@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#5C4033] text-white relative">
+    <div className="min-h-screen bg-[#fdf8f4] text-white relative">
       
       {/* Navbar */}
       <nav className="fixed top-0 w-full bg-white shadow-md p-5 flex justify-center gap-10 text-[#5C4033] font-semibold tracking-wide">
@@ -14,7 +14,7 @@ export default function Home() {
 
       {/* Center Content */}
       <div className="flex items-center justify-center min-h-screen">
-        <h1 className="text-6xl font-bold tracking-widest">Contact</h1>
+        <h1 className="text-6xl font-bold tracking-widest bg-[#5C4033]">Contact</h1>
       </div>
 
     </div>
