@@ -1,18 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useCallback, ReactNode, RefObject } from "react";
+import { useEffect, useRef, useCallback, ReactNode } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { gsap } from "gsap";
 import Logo from "./Logo";
 
 interface PageTransitionProps {
   children: ReactNode;
-}
-
-interface VelocityState {
-  x: number;
-  y: number;
-  z: number;
 }
 
 const PageTransition = ({ children }: PageTransitionProps) => {
@@ -87,22 +81,26 @@ const PageTransition = ({ children }: PageTransitionProps) => {
     revealTimeoutRef.current = setTimeout(() => {
       if (blocksRef.current.length > 0) {
         const firstBlock = blocksRef.current[0];
-        if (firstBlock && gsap.getProperty(firstBlock, "scaleX") > 0) {
-          gsap.to(blocksRef.current, {
-            scaleX: 0,
-            duration: 0.2,
-            ease: "power2.out",
-            transformOrigin: "right",
-            onComplete: () => {
-              isTransitioning.current = false;
-              if (overlayRef.current) {
-                overlayRef.current.style.pointerEvents = "none";
-              }
-              if (logoOverlayRef.current) {
-                logoOverlayRef.current.style.pointerEvents = "none";
-              }
-            },
-          });
+        if (firstBlock) {
+          const scaleX = gsap.getProperty(firstBlock, "scaleX");
+          // Fix for line 90: properly check if scaleX is a number and > 0
+          if (typeof scaleX === "number" && scaleX > 0) {
+            gsap.to(blocksRef.current, {
+              scaleX: 0,
+              duration: 0.2,
+              ease: "power2.out",
+              transformOrigin: "right",
+              onComplete: () => {
+                isTransitioning.current = false;
+                if (overlayRef.current) {
+                  overlayRef.current.style.pointerEvents = "none";
+                }
+                if (logoOverlayRef.current) {
+                  logoOverlayRef.current.style.pointerEvents = "none";
+                }
+              },
+            });
+          }
         }
       }
     }, 1000);
@@ -175,42 +173,44 @@ const PageTransition = ({ children }: PageTransitionProps) => {
       transformOrigin: "left",
     })
 
-      .set(logoOverlayRef.current, { opacity: 1 }, "-=0.2")
+      .set(logoOverlayRef.current, { opacity: 1 }, "-=0.2");
 
-      .set(
-        logoRef.current?.querySelector("path"),
+    // Fix for null/undefined errors - safely check if path exists before animating
+    const pathElement = logoRef.current?.querySelector("path");
+    if (pathElement) {
+      tl.set(
+        pathElement,
         {
           strokeDashoffset: pathLengthRef.current,
           fill: "transparent",
         },
         "-=0.25"
       )
+        .to(
+          pathElement,
+          {
+            strokeDashoffset: 0,
+            duration: 2,
+            ease: "power2.inOut",
+          },
+          "-=0.5"
+        )
+        .to(
+          pathElement,
+          {
+            fill: "#e3e4d8",
+            duration: 1,
+            ease: "power2.out",
+          },
+          "-=0.5"
+        );
+    }
 
-      .to(
-        logoRef.current?.querySelector("path"),
-        {
-          strokeDashoffset: 0,
-          duration: 2,
-          ease: "power2.inOut",
-        },
-        "-=0.5"
-      )
-
-      .to(
-        logoRef.current?.querySelector("path"),
-        {
-          fill: "#e3e4d8",
-          duration: 1,
-          ease: "power2.out",
-        },
-        "-=0.5"
-      )
-
-      .to(logoOverlayRef.current, {
-        opacity: 0,
-        duration: 0.25,
-        ease: "power2.out",
-      });
+    tl.to(logoOverlayRef.current, {
+      opacity: 0,
+      duration: 0.25,
+      ease: "power2.out",
+    });
   };
 
   return (

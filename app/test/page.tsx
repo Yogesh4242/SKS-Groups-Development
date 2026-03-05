@@ -2,39 +2,12 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import Image from "next/image";
 
 export default function Projects() {
   const router = useRouter();
   const [hoveredContainer, setHoveredContainer] = useState<number | null>(null);
-  const swiftUpRef = useRef<HTMLParagraphElement>(null);
-
-  useEffect(() => {
-    if (swiftUpRef.current) {
-      const elem = swiftUpRef.current;
-      const words = elem.textContent?.split(' ') || [];
-      elem.innerHTML = '';
-
-      words.forEach((word, index) => {
-        const span = document.createElement('span');
-        span.style.display = 'inline-block';
-        span.style.overflow = 'hidden';
-        span.style.animation = '0.3s swift-up ease-in-out forwards';
-        
-        const i = document.createElement('i');
-        i.style.fontStyle = 'normal';
-        i.style.position = 'relative';
-        i.style.top = '55px';
-        i.style.animation = '0.5s swift-up ease-in-out forwards';
-        i.style.animationDelay = `${index * 0.2}s`;
-        i.textContent = word + (index < words.length - 1 ? '\u00A0' : '');
-        
-        span.appendChild(i);
-        elem.appendChild(span);
-      });
-    }
-  }, []);
 
   const handleContainerClick = (containerNumber: number) => {
     if (containerNumber === 1) {
@@ -49,7 +22,7 @@ export default function Projects() {
       minHeight: "100vh", 
       background: "linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%)",
     }}>
-      {/* Navbar */}
+      {/* Navbar - Updated for dark theme */}
       <nav style={{
         position: "fixed",
         top: 0,
@@ -69,9 +42,6 @@ export default function Projects() {
         <Link href="/contact" style={{ color: "#ffffff", textDecoration: "none", fontWeight: "600", opacity: 0.9, transition: "opacity 0.3s" }}>Contact</Link>
       </nav>
 
-      {/* Spacer div */}
-      <div style={{ height: "80px" }}></div>
-
       {/* Section 1 - First Two Containers */}
       <div style={{
         display: "flex",
@@ -79,41 +49,20 @@ export default function Projects() {
         alignItems: "center",
         justifyContent: "center",
         minHeight: "70vh",
-        padding: "100px 20px 60px",
-        gap: "60px",
+        padding: "180px 20px 60px",
+        gap: "60px", // Increased gap between elements
       }}>
-        {/* Swift Up Text */}
-        <div style={{
-          width: "80%",
-          maxWidth: "900px",
-          marginBottom: "20px",
-          textAlign: "center",
-        }}>
-          <p
-            ref={swiftUpRef}
-            style={{
-              fontSize: "2rem",
-              fontFamily: "Helvetica, sans-serif",
-              color: "#ffffff",
-              lineHeight: "1.4",
-              letterSpacing: "-1px",
-            }}
-          >
-            Building the future with innovative infrastructure solutions
-          </p>
-        </div>
-
         {/* Section 1 Title */}
         <h2 style={{
           color: "#ffd700",
           fontSize: "2.5rem",
           fontFamily: "'DM Sans', sans-serif",
-          marginBottom: "30px",
+          marginBottom: "60px", // Increased gap after title
           textTransform: "uppercase",
           letterSpacing: "2px",
           textShadow: "0 0 10px rgba(255, 215, 0, 0.5)",
         }}>
-          Infrastructure Projects
+          Featured Project
         </h2>
 
         {/* Container 1 - BIG (Clickable) with Image */}
@@ -139,8 +88,8 @@ export default function Projects() {
         >
           {/* Background Image */}
           <img 
-            src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=2070&auto=format&fit=crop"
-            alt="Highway infrastructure project"
+            src="https://images.unsplash.com/photo-1486718448742-163732cd1544?q=80&w=2069&auto=format&fit=crop"
+            alt="Modern building architecture"
             style={{
               width: "100%",
               height: "100%",
@@ -172,17 +121,17 @@ export default function Projects() {
                 opacity: 1,
                 animation: "fadeIn 0.3s ease",
               }}>
-                SMART CITY
+                PROJECT 1
               </span>
             </div>
           )}
         </div>
 
-        {/* Container 2 - SMALL with 5-line paragraph infrastructure project description */}
+        {/* Container 2 - SMALL with glowing gradient animation and centered title */}
         <div style={{
           width: "75%",
           maxWidth: "700px",
-          height: "240px", // Increased height to accommodate 5 lines comfortably
+          height: "180px", // Slightly increased height for better spacing
           background: "rgba(20, 20, 20, 0.4)",
           borderRadius: "20px",
           boxShadow: "0 10px 30px rgba(0, 0, 0, 0.3)",
@@ -192,14 +141,14 @@ export default function Projects() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          padding: "20px 30px",
+          padding: "0 30px",
         }}>
           <h3 style={{
             fontSize: "1.8rem",
             fontFamily: "'DM Sans', sans-serif",
-            fontWeight: "700",
+            fontWeight: "700", // Bold title
             textAlign: "center",
-            marginBottom: "12px",
+            marginBottom: "10px",
             backgroundSize: "200%",
             backgroundImage: "linear-gradient(45deg, #fff070 0%, #fff070 35%, #00c9d3 66%, #00c9d3 100%)",
             WebkitTextFillColor: "transparent",
@@ -207,26 +156,22 @@ export default function Projects() {
             backgroundClip: "text",
             animation: "glow 9s linear infinite",
           }}>
-            METRO CORRIDOR
+            WEB APPLICATION
           </h3>
           <p
             style={{
-              fontSize: "1rem",
+              fontSize: "1.2rem",
               fontFamily: "'DM Sans', sans-serif",
-              fontWeight: "600",
+              fontWeight: "600", // Bold description
               textAlign: "center",
-              lineHeight: "1.7",
-              backgroundSize: "200%",
-              backgroundImage: "linear-gradient(45deg, #fff070 0%, #fff070 35%, #00c9d3 66%, #00c9d3 100%)",
-              WebkitTextFillColor: "transparent",
-              WebkitBackgroundClip: "text",
-              backgroundClip: "text",
-              animation: "glow 9s linear infinite",
+              lineHeight: "1.5",
+              color: "#ffffff",
               margin: 0,
               padding: 0,
+              opacity: 0.9,
             }}
           >
-            A 15km elevated metro corridor now connects major business districts across the city. Eight modern stations feature smart ticketing and real-time information systems. Commute times have been reduced by 45 minutes for thousands of daily passengers. The corridor serves over 500,000 commuters each day with reliable service. This infrastructure project has transformed urban mobility and reduced traffic congestion significantly.
+            A modern web application built with React and Node.js, featuring real-time updates and responsive design.
           </p>
         </div>
       </div>
@@ -238,20 +183,20 @@ export default function Projects() {
         alignItems: "center",
         justifyContent: "center",
         minHeight: "70vh",
-        padding: "120px 20px 100px",
-        gap: "60px",
+        padding: "120px 20px 100px", // Increased top padding
+        gap: "60px", // Increased gap between elements
       }}>
         {/* Section 2 Title */}
         <h2 style={{
           color: "#ffd700",
           fontSize: "2.5rem",
           fontFamily: "'DM Sans', sans-serif",
-          marginBottom: "60px",
+          marginBottom: "60px", // Increased gap after title
           textTransform: "uppercase",
           letterSpacing: "2px",
           textShadow: "0 0 10px rgba(255, 215, 0, 0.5)",
         }}>
-          Construction & Consulting
+          Mobile Innovation
         </h2>
 
         {/* Container 3 - BIG (Clickable) with Image */}
@@ -277,8 +222,8 @@ export default function Projects() {
         >
           {/* Background Image */}
           <img 
-            src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=2070&auto=format&fit=crop"
-            alt="Commercial construction project"
+            src="https://images.unsplash.com/photo-1460472178825-e5240623afd5?q=80&w=2069&auto=format&fit=crop"
+            alt="Skyscraper building"
             style={{
               width: "100%",
               height: "100%",
@@ -310,17 +255,17 @@ export default function Projects() {
                 opacity: 1,
                 animation: "fadeIn 0.3s ease",
               }}>
-                BUSINESS HUB
+                PROJECT 3
               </span>
             </div>
           )}
         </div>
 
-        {/* Container 4 - SMALL with 5-line paragraph construction consulting project description */}
+        {/* Container 4 - SMALL with glowing gradient animation and centered title */}
         <div style={{
           width: "75%",
           maxWidth: "700px",
-          height: "240px", // Increased height to accommodate 5 lines comfortably
+          height: "180px", // Slightly increased height for better spacing
           background: "rgba(20, 20, 20, 0.4)",
           borderRadius: "20px",
           boxShadow: "0 10px 30px rgba(0, 0, 0, 0.3)",
@@ -330,14 +275,14 @@ export default function Projects() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          padding: "20px 30px",
+          padding: "0 30px",
         }}>
           <h3 style={{
             fontSize: "1.8rem",
             fontFamily: "'DM Sans', sans-serif",
-            fontWeight: "700",
+            fontWeight: "700", // Bold title
             textAlign: "center",
-            marginBottom: "12px",
+            marginBottom: "10px",
             backgroundSize: "200%",
             backgroundImage: "linear-gradient(45deg, #fff070 0%, #fff070 35%, #00c9d3 66%, #00c9d3 100%)",
             WebkitTextFillColor: "transparent",
@@ -345,31 +290,27 @@ export default function Projects() {
             backgroundClip: "text",
             animation: "glow 9s linear infinite",
           }}>
-            GREEN TOWER
+            MOBILE APP
           </h3>
           <p
             style={{
-              fontSize: "1rem",
+              fontSize: "1.2rem",
               fontFamily: "'DM Sans', sans-serif",
-              fontWeight: "600",
+              fontWeight: "600", // Bold description
               textAlign: "center",
-              lineHeight: "1.7",
-              backgroundSize: "200%",
-              backgroundImage: "linear-gradient(45deg, #fff070 0%, #fff070 35%, #00c9d3 66%, #00c9d3 100%)",
-              WebkitTextFillColor: "transparent",
-              WebkitBackgroundClip: "text",
-              backgroundClip: "text",
-              animation: "glow 9s linear infinite",
+              lineHeight: "1.5",
+              color: "#ffffff",
               margin: 0,
               padding: 0,
+              opacity: 0.9,
             }}
           >
-            This LEED-certified commercial tower was built using sustainable materials throughout its structure. Energy-efficient HVAC systems reduce power consumption while maintaining optimal comfort. Solar panels and rainwater harvesting systems make the building self-sufficient in resource management. Our consulting team guided every phase from design to final certification. The result is a 40% reduction in carbon footprint compared to conventional buildings.
+            Cross-platform mobile application with offline support, push notifications, and real-time chat functionality.
           </p>
         </div>
       </div>
 
-      {/* Add keyframes for animations */}
+      {/* Add keyframes for fadeIn and glow animations */}
       <style jsx>{`
         @keyframes fadeIn {
           from {
@@ -391,12 +332,6 @@ export default function Projects() {
           }
           100% {
             background-position: 0% 43%;
-          }
-        }
-        
-        @keyframes swift-up {
-          to {
-            top: 0;
           }
         }
       `}</style>
