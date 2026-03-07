@@ -47,26 +47,26 @@ export default function Projects() {
   return (
     <div style={{ 
       minHeight: "100vh", 
-      background: "linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%)",
+      background: "#e8ddd0", // Main page background - cream
     }}>
-      {/* Navbar */}
+      {/* Navbar - Warm White */}
       <nav style={{
         position: "fixed",
         top: 0,
         width: "100%",
-        backgroundColor: "#111111",
+        backgroundColor: "#efe6d8", // Warm white
         padding: "20px",
         display: "flex",
         justifyContent: "center",
         gap: "40px",
         zIndex: 1000,
-        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.5)",
-        borderBottom: "1px solid rgba(255, 215, 0, 0.2)",
+        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+        borderBottom: "1px solid #a8835a", // Light brown border
       }}>
-        <Link href="/" style={{ color: "#ffffff", textDecoration: "none", fontWeight: "600", opacity: 0.9, transition: "opacity 0.3s" }}>Home</Link>
-        <Link href="/services" style={{ color: "#ffffff", textDecoration: "none", fontWeight: "600", opacity: 0.9, transition: "opacity 0.3s" }}>Services</Link>
-        <Link href="/projects" style={{ color: "#ffd700", textDecoration: "none", fontWeight: "600", opacity: 1 }}>Projects</Link>
-        <Link href="/contact" style={{ color: "#ffffff", textDecoration: "none", fontWeight: "600", opacity: 0.9, transition: "opacity 0.3s" }}>Contact</Link>
+        <Link href="/" style={{ color: "#4e2f10", textDecoration: "none", fontWeight: "600", opacity: 0.9, transition: "opacity 0.3s" }}>Home</Link>
+        <Link href="/services" style={{ color: "#4e2f10", textDecoration: "none", fontWeight: "600", opacity: 0.9, transition: "opacity 0.3s" }}>Services</Link>
+        <Link href="/projects" style={{ color: "#2c1a0a", textDecoration: "none", fontWeight: "700", opacity: 1 }}>Projects</Link>
+        <Link href="/contact" style={{ color: "#4e2f10", textDecoration: "none", fontWeight: "600", opacity: 0.9, transition: "opacity 0.3s" }}>Contact</Link>
       </nav>
 
       {/* Spacer div */}
@@ -94,7 +94,7 @@ export default function Projects() {
             style={{
               fontSize: "2rem",
               fontFamily: "Helvetica, sans-serif",
-              color: "#ffffff",
+              color: "#2c1a0a", // Dark brown for main heading
               lineHeight: "1.4",
               letterSpacing: "-1px",
             }}
@@ -105,13 +105,13 @@ export default function Projects() {
 
         {/* Section 1 Title */}
         <h2 style={{
-          color: "#ffd700",
+          color: "#4e2f10", // Brown for sub-headings
           fontSize: "2.5rem",
           fontFamily: "'DM Sans', sans-serif",
           marginBottom: "30px",
           textTransform: "uppercase",
           letterSpacing: "2px",
-          textShadow: "0 0 10px rgba(255, 215, 0, 0.5)",
+          textShadow: "0 0 10px rgba(78, 47, 16, 0.2)",
         }}>
           Infrastructure Projects
         </h2>
@@ -124,9 +124,9 @@ export default function Projects() {
             height: "250px",
             borderRadius: "20px",
             boxShadow: hoveredContainer === 1 
-              ? "0 10px 30px rgba(0, 0, 0, 0.5)"
-              : "0 10px 30px rgba(0, 0, 0, 0.3)",
-            border: "1px solid rgba(255, 215, 0, 0.2)",
+              ? "0 10px 30px rgba(78, 47, 16, 0.3)"
+              : "0 10px 30px rgba(0, 0, 0, 0.1)",
+            border: "1px solid #a8835a", // Light brown border
             backdropFilter: "blur(5px)",
             transition: "all 0.3s ease",
             cursor: "pointer",
@@ -161,14 +161,14 @@ export default function Projects() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              backgroundColor: "rgba(232, 221, 208, 0.8)", // Cream with opacity
             }}>
               <span style={{
-                color: "#ffd700",
+                color: "#2c1a0a", // Dark brown
                 fontSize: "3rem",
                 fontWeight: "bold",
                 fontFamily: "'DM Sans', sans-serif",
-                textShadow: "0 0 20px rgba(255, 215, 0, 0.8)",
+                textShadow: "0 0 20px rgba(44, 26, 10, 0.3)",
                 opacity: 1,
                 animation: "fadeIn 0.3s ease",
               }}>
@@ -182,12 +182,11 @@ export default function Projects() {
         <div style={{
           width: "75%",
           maxWidth: "700px",
-          height: "240px", // Increased height to accommodate 5 lines comfortably
-          background: "rgba(20, 20, 20, 0.4)",
+          height: "240px",
+          background: "#efe6d8", // Warm white
           borderRadius: "20px",
-          boxShadow: "0 10px 30px rgba(0, 0, 0, 0.3)",
-          border: "1px solid rgba(100, 150, 255, 0.2)",
-          backdropFilter: "blur(5px)",
+          boxShadow: "0 10px 30px rgba(78, 47, 16, 0.15)",
+          border: "1px solid #a8835a", // Light brown border
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -201,7 +200,7 @@ export default function Projects() {
             textAlign: "center",
             marginBottom: "12px",
             backgroundSize: "200%",
-            backgroundImage: "linear-gradient(45deg, #fff070 0%, #fff070 35%, #00c9d3 66%, #00c9d3 100%)",
+            backgroundImage: "linear-gradient(45deg, #4e2f10 0%, #2c1a0a 35%, #a8835a 66%, #7a5230 100%)",
             WebkitTextFillColor: "transparent",
             WebkitBackgroundClip: "text",
             backgroundClip: "text",
@@ -213,11 +212,11 @@ export default function Projects() {
             style={{
               fontSize: "1rem",
               fontFamily: "'DM Sans', sans-serif",
-              fontWeight: "600",
+              fontWeight: "500",
               textAlign: "center",
               lineHeight: "1.7",
               backgroundSize: "200%",
-              backgroundImage: "linear-gradient(45deg, #fff070 0%, #fff070 35%, #00c9d3 66%, #00c9d3 100%)",
+              backgroundImage: "linear-gradient(45deg, #4e2f10 0%, #2c1a0a 35%, #a8835a 66%, #7a5230 100%)",
               WebkitTextFillColor: "transparent",
               WebkitBackgroundClip: "text",
               backgroundClip: "text",
@@ -243,13 +242,13 @@ export default function Projects() {
       }}>
         {/* Section 2 Title */}
         <h2 style={{
-          color: "#ffd700",
+          color: "#4e2f10", // Brown for sub-headings
           fontSize: "2.5rem",
           fontFamily: "'DM Sans', sans-serif",
           marginBottom: "60px",
           textTransform: "uppercase",
           letterSpacing: "2px",
-          textShadow: "0 0 10px rgba(255, 215, 0, 0.5)",
+          textShadow: "0 0 10px rgba(78, 47, 16, 0.2)",
         }}>
           Construction & Consulting
         </h2>
@@ -262,9 +261,9 @@ export default function Projects() {
             height: "250px",
             borderRadius: "20px",
             boxShadow: hoveredContainer === 3 
-              ? "0 10px 30px rgba(0, 0, 0, 0.5)"
-              : "0 10px 30px rgba(0, 0, 0, 0.3)",
-            border: "1px solid rgba(255, 100, 150, 0.2)",
+              ? "0 10px 30px rgba(78, 47, 16, 0.3)"
+              : "0 10px 30px rgba(0, 0, 0, 0.1)",
+            border: "1px solid #a8835a", // Light brown border
             backdropFilter: "blur(5px)",
             transition: "all 0.3s ease",
             cursor: "pointer",
@@ -299,14 +298,14 @@ export default function Projects() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              backgroundColor: "rgba(232, 221, 208, 0.8)", // Cream with opacity
             }}>
               <span style={{
-                color: "#ffd700",
+                color: "#2c1a0a", // Dark brown
                 fontSize: "3rem",
                 fontWeight: "bold",
                 fontFamily: "'DM Sans', sans-serif",
-                textShadow: "0 0 20px rgba(255, 215, 0, 0.8)",
+                textShadow: "0 0 20px rgba(44, 26, 10, 0.3)",
                 opacity: 1,
                 animation: "fadeIn 0.3s ease",
               }}>
@@ -320,12 +319,11 @@ export default function Projects() {
         <div style={{
           width: "75%",
           maxWidth: "700px",
-          height: "240px", // Increased height to accommodate 5 lines comfortably
-          background: "rgba(20, 20, 20, 0.4)",
+          height: "240px",
+          background: "#efe6d8", // Warm white
           borderRadius: "20px",
-          boxShadow: "0 10px 30px rgba(0, 0, 0, 0.3)",
-          border: "1px solid rgba(150, 255, 100, 0.2)",
-          backdropFilter: "blur(5px)",
+          boxShadow: "0 10px 30px rgba(78, 47, 16, 0.15)",
+          border: "1px solid #a8835a", // Light brown border
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -339,7 +337,7 @@ export default function Projects() {
             textAlign: "center",
             marginBottom: "12px",
             backgroundSize: "200%",
-            backgroundImage: "linear-gradient(45deg, #fff070 0%, #fff070 35%, #00c9d3 66%, #00c9d3 100%)",
+            backgroundImage: "linear-gradient(45deg, #4e2f10 0%, #2c1a0a 35%, #a8835a 66%, #7a5230 100%)",
             WebkitTextFillColor: "transparent",
             WebkitBackgroundClip: "text",
             backgroundClip: "text",
@@ -351,11 +349,11 @@ export default function Projects() {
             style={{
               fontSize: "1rem",
               fontFamily: "'DM Sans', sans-serif",
-              fontWeight: "600",
+              fontWeight: "500",
               textAlign: "center",
               lineHeight: "1.7",
               backgroundSize: "200%",
-              backgroundImage: "linear-gradient(45deg, #fff070 0%, #fff070 35%, #00c9d3 66%, #00c9d3 100%)",
+              backgroundImage: "linear-gradient(45deg, #4e2f10 0%, #2c1a0a 35%, #a8835a 66%, #7a5230 100%)",
               WebkitTextFillColor: "transparent",
               WebkitBackgroundClip: "text",
               backgroundClip: "text",
@@ -382,6 +380,12 @@ export default function Projects() {
           }
         }
         
+        @keyframes swift-up {
+          to {
+            top: 0;
+          }
+        }
+        
         @keyframes glow {
           0% {
             background-position: 0% 43%;
@@ -391,12 +395,6 @@ export default function Projects() {
           }
           100% {
             background-position: 0% 43%;
-          }
-        }
-        
-        @keyframes swift-up {
-          to {
-            top: 0;
           }
         }
       `}</style>
