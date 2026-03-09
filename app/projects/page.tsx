@@ -2,402 +2,395 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
+import { useState } from "react";
 
 export default function Projects() {
   const router = useRouter();
-  const [hoveredContainer, setHoveredContainer] = useState<number | null>(null);
-  const swiftUpRef = useRef<HTMLParagraphElement>(null);
+  const [hovered, setHovered] = useState<number | null>(null);
 
-  useEffect(() => {
-    if (swiftUpRef.current) {
-      const elem = swiftUpRef.current;
-      const words = elem.textContent?.split(' ') || [];
-      elem.innerHTML = '';
-
-      words.forEach((word, index) => {
-        const span = document.createElement('span');
-        span.style.display = 'inline-block';
-        span.style.overflow = 'hidden';
-        span.style.animation = '0.3s swift-up ease-in-out forwards';
-        
-        const i = document.createElement('i');
-        i.style.fontStyle = 'normal';
-        i.style.position = 'relative';
-        i.style.top = '55px';
-        i.style.animation = '0.5s swift-up ease-in-out forwards';
-        i.style.animationDelay = `${index * 0.2}s`;
-        i.textContent = word + (index < words.length - 1 ? '\u00A0' : '');
-        
-        span.appendChild(i);
-        elem.appendChild(span);
-      });
-    }
-  }, []);
-
-  const handleContainerClick = (containerNumber: number) => {
-    if (containerNumber === 1) {
-      router.push('/projects/project1');
-    } else if (containerNumber === 3) {
-      router.push('/projects/project3');
-    }
+  const goToProject = (id: number) => {
+    if (id === 1) router.push("/projects/project1");
+    if (id === 2) router.push("/projects/project3");
   };
 
   return (
-    <div style={{ 
-      minHeight: "100vh", 
-      background: "#e8ddd0", // Main page background - cream
-    }}>
-      {/* Navbar - Warm White */}
-      <nav style={{
-        position: "fixed",
-        top: 0,
-        width: "100%",
-        backgroundColor: "#efe6d8", // Warm white
-        padding: "20px",
-        display: "flex",
-        justifyContent: "center",
-        gap: "40px",
-        zIndex: 1000,
-        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
-        borderBottom: "1px solid #a8835a", // Light brown border
-      }}>
-        <Link href="/" style={{ color: "#4e2f10", textDecoration: "none", fontWeight: "600", opacity: 0.9, transition: "opacity 0.3s" }}>Home</Link>
-        <Link href="/services" style={{ color: "#4e2f10", textDecoration: "none", fontWeight: "600", opacity: 0.9, transition: "opacity 0.3s" }}>Services</Link>
-        <Link href="/projects" style={{ color: "#2c1a0a", textDecoration: "none", fontWeight: "700", opacity: 1 }}>Projects</Link>
-        <Link href="/contact" style={{ color: "#4e2f10", textDecoration: "none", fontWeight: "600", opacity: 0.9, transition: "opacity 0.3s" }}>Contact</Link>
-      </nav>
+    <>
+      <style>{`
 
-      {/* Spacer div */}
-      <div style={{ height: "80px" }}></div>
+      @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap');
 
-      {/* Section 1 - First Two Containers */}
-      <div style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: "70vh",
-        padding: "100px 20px 60px",
-        gap: "60px",
-      }}>
-        {/* Swift Up Text */}
-        <div style={{
-          width: "80%",
-          maxWidth: "900px",
-          marginBottom: "20px",
-          textAlign: "center",
-        }}>
-          <p
-            ref={swiftUpRef}
-            style={{
-              fontSize: "2rem",
-              fontFamily: "Helvetica, sans-serif",
-              color: "#2c1a0a", // Dark brown for main heading
-              lineHeight: "1.4",
-              letterSpacing: "-1px",
-            }}
-          >
-            Building the future with innovative infrastructure solutions
-          </p>
-        </div>
+      *{
+        box-sizing:border-box;
+        margin:0;
+        padding:0;
+      }
 
-        {/* Section 1 Title */}
-        <h2 style={{
-          color: "#4e2f10", // Brown for sub-headings
-          fontSize: "2.5rem",
-          fontFamily: "'DM Sans', sans-serif",
-          marginBottom: "30px",
-          textTransform: "uppercase",
-          letterSpacing: "2px",
-          textShadow: "0 0 10px rgba(78, 47, 16, 0.2)",
-        }}>
-          Infrastructure Projects
-        </h2>
+      body{
+        background:#e8ddd0;
+      }
 
-        {/* Container 1 - BIG (Clickable) with Image */}
-        <div 
-          style={{
-            width: "85%",
-            maxWidth: "900px",
-            height: "250px",
-            borderRadius: "20px",
-            boxShadow: hoveredContainer === 1 
-              ? "0 10px 30px rgba(78, 47, 16, 0.3)"
-              : "0 10px 30px rgba(0, 0, 0, 0.1)",
-            border: "1px solid #a8835a", // Light brown border
-            backdropFilter: "blur(5px)",
-            transition: "all 0.3s ease",
-            cursor: "pointer",
-            position: "relative",
-            overflow: "hidden",
-          }}
-          onMouseEnter={() => setHoveredContainer(1)}
-          onMouseLeave={() => setHoveredContainer(null)}
-          onClick={() => handleContainerClick(1)}
-        >
-          {/* Background Image */}
-          <img 
-            src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=2070&auto=format&fit=crop"
-            alt="Highway infrastructure project"
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              transition: "filter 0.3s ease",
-              filter: hoveredContainer === 1 ? "blur(4px)" : "none",
-            }}
-          />
-          
-          {/* Overlay with text on hover */}
-          {hoveredContainer === 1 && (
-            <div style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              backgroundColor: "rgba(232, 221, 208, 0.8)", // Cream with opacity
-            }}>
-              <span style={{
-                color: "#2c1a0a", // Dark brown
-                fontSize: "3rem",
-                fontWeight: "bold",
-                fontFamily: "'DM Sans', sans-serif",
-                textShadow: "0 0 20px rgba(44, 26, 10, 0.3)",
-                opacity: 1,
-                animation: "fadeIn 0.3s ease",
-              }}>
-                SMART CITY
-              </span>
-            </div>
-          )}
-        </div>
+      /* NAV */
 
-        {/* Container 2 - SMALL with 5-line paragraph infrastructure project description */}
-        <div style={{
-          width: "75%",
-          maxWidth: "700px",
-          height: "240px",
-          background: "#efe6d8", // Warm white
-          borderRadius: "20px",
-          boxShadow: "0 10px 30px rgba(78, 47, 16, 0.15)",
-          border: "1px solid #a8835a", // Light brown border
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "20px 30px",
-        }}>
-          <h3 style={{
-            fontSize: "1.8rem",
-            fontFamily: "'DM Sans', sans-serif",
-            fontWeight: "700",
-            textAlign: "center",
-            marginBottom: "12px",
-            backgroundSize: "200%",
-            backgroundImage: "linear-gradient(45deg, #4e2f10 0%, #2c1a0a 35%, #a8835a 66%, #7a5230 100%)",
-            WebkitTextFillColor: "transparent",
-            WebkitBackgroundClip: "text",
-            backgroundClip: "text",
-            animation: "glow 9s linear infinite",
-          }}>
-            METRO CORRIDOR
-          </h3>
-          <p
-            style={{
-              fontSize: "1rem",
-              fontFamily: "'DM Sans', sans-serif",
-              fontWeight: "500",
-              textAlign: "center",
-              lineHeight: "1.7",
-              backgroundSize: "200%",
-              backgroundImage: "linear-gradient(45deg, #4e2f10 0%, #2c1a0a 35%, #a8835a 66%, #7a5230 100%)",
-              WebkitTextFillColor: "transparent",
-              WebkitBackgroundClip: "text",
-              backgroundClip: "text",
-              animation: "glow 9s linear infinite",
-              margin: 0,
-              padding: 0,
-            }}
-          >
-            A 15km elevated metro corridor now connects major business districts across the city. Eight modern stations feature smart ticketing and real-time information systems. Commute times have been reduced by 45 minutes for thousands of daily passengers. The corridor serves over 500,000 commuters each day with reliable service. This infrastructure project has transformed urban mobility and reduced traffic congestion significantly.
-          </p>
-        </div>
-      </div>
+      .nav-link{
+        font-family:'DM Sans';
+        font-size:.85rem;
+        letter-spacing:.12em;
+        text-transform:uppercase;
+        color:#5c3a1e;
+        text-decoration:none;
+        position:relative;
+      }
 
-      {/* Section 2 - Last Two Containers */}
-      <div style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: "70vh",
-        padding: "120px 20px 100px",
-        gap: "60px",
-      }}>
-        {/* Section 2 Title */}
-        <h2 style={{
-          color: "#4e2f10", // Brown for sub-headings
-          fontSize: "2.5rem",
-          fontFamily: "'DM Sans', sans-serif",
-          marginBottom: "60px",
-          textTransform: "uppercase",
-          letterSpacing: "2px",
-          textShadow: "0 0 10px rgba(78, 47, 16, 0.2)",
-        }}>
-          Construction & Consulting
-        </h2>
+      .nav-link::after{
+        content:'';
+        position:absolute;
+        left:0;
+        bottom:-4px;
+        width:0;
+        height:1px;
+        background:#a8835a;
+        transition:.3s;
+      }
 
-        {/* Container 3 - BIG (Clickable) with Image */}
-        <div 
-          style={{
-            width: "85%",
-            maxWidth: "900px",
-            height: "250px",
-            borderRadius: "20px",
-            boxShadow: hoveredContainer === 3 
-              ? "0 10px 30px rgba(78, 47, 16, 0.3)"
-              : "0 10px 30px rgba(0, 0, 0, 0.1)",
-            border: "1px solid #a8835a", // Light brown border
-            backdropFilter: "blur(5px)",
-            transition: "all 0.3s ease",
-            cursor: "pointer",
-            position: "relative",
-            overflow: "hidden",
-          }}
-          onMouseEnter={() => setHoveredContainer(3)}
-          onMouseLeave={() => setHoveredContainer(null)}
-          onClick={() => handleContainerClick(3)}
-        >
-          {/* Background Image */}
-          <img 
-            src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=2070&auto=format&fit=crop"
-            alt="Commercial construction project"
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              transition: "filter 0.3s ease",
-              filter: hoveredContainer === 3 ? "blur(4px)" : "none",
-            }}
-          />
-          
-          {/* Overlay with text on hover */}
-          {hoveredContainer === 3 && (
-            <div style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              backgroundColor: "rgba(232, 221, 208, 0.8)", // Cream with opacity
-            }}>
-              <span style={{
-                color: "#2c1a0a", // Dark brown
-                fontSize: "3rem",
-                fontWeight: "bold",
-                fontFamily: "'DM Sans', sans-serif",
-                textShadow: "0 0 20px rgba(44, 26, 10, 0.3)",
-                opacity: 1,
-                animation: "fadeIn 0.3s ease",
-              }}>
-                BUSINESS HUB
-              </span>
-            </div>
-          )}
-        </div>
+      .nav-link:hover::after{
+        width:100%;
+      }
 
-        {/* Container 4 - SMALL with 5-line paragraph construction consulting project description */}
-        <div style={{
-          width: "75%",
-          maxWidth: "700px",
-          height: "240px",
-          background: "#efe6d8", // Warm white
-          borderRadius: "20px",
-          boxShadow: "0 10px 30px rgba(78, 47, 16, 0.15)",
-          border: "1px solid #a8835a", // Light brown border
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "20px 30px",
-        }}>
-          <h3 style={{
-            fontSize: "1.8rem",
-            fontFamily: "'DM Sans', sans-serif",
-            fontWeight: "700",
-            textAlign: "center",
-            marginBottom: "12px",
-            backgroundSize: "200%",
-            backgroundImage: "linear-gradient(45deg, #4e2f10 0%, #2c1a0a 35%, #a8835a 66%, #7a5230 100%)",
-            WebkitTextFillColor: "transparent",
-            WebkitBackgroundClip: "text",
-            backgroundClip: "text",
-            animation: "glow 9s linear infinite",
-          }}>
-            GREEN TOWER
-          </h3>
-          <p
-            style={{
-              fontSize: "1rem",
-              fontFamily: "'DM Sans', sans-serif",
-              fontWeight: "500",
-              textAlign: "center",
-              lineHeight: "1.7",
-              backgroundSize: "200%",
-              backgroundImage: "linear-gradient(45deg, #4e2f10 0%, #2c1a0a 35%, #a8835a 66%, #7a5230 100%)",
-              WebkitTextFillColor: "transparent",
-              WebkitBackgroundClip: "text",
-              backgroundClip: "text",
-              animation: "glow 9s linear infinite",
-              margin: 0,
-              padding: 0,
-            }}
-          >
-            This LEED-certified commercial tower was built using sustainable materials throughout its structure. Energy-efficient HVAC systems reduce power consumption while maintaining optimal comfort. Solar panels and rainwater harvesting systems make the building self-sufficient in resource management. Our consulting team guided every phase from design to final certification. The result is a 40% reduction in carbon footprint compared to conventional buildings.
-          </p>
-        </div>
-      </div>
+      /* HERO */
 
-      {/* Add keyframes for animations */}
-      <style jsx>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+      .hero{
+        padding:110px 20px 50px;
+        max-width:900px;
+        margin:auto;
+        text-align:center;
+      }
+
+      .hero h1{
+        font-family:'Cormorant Garamond';
+        font-size:clamp(2rem,4vw,3rem);
+        font-weight:600;
+        color:#2c1a0a;
+        line-height:1.35;
+      }
+
+      .section{
+        max-width:1200px;
+        margin:auto;
+        padding:60px 20px;
+      }
+
+      .section-title{
+        font-family:'Cormorant Garamond';
+        font-size:clamp(1.8rem,4vw,2.6rem);
+        margin-bottom:30px;
+        color:#2c1a0a;
+      }
+
+      /* GRID */
+
+      .project-row{
+        display:grid;
+        gap:30px;
+      }
+
+      @media(min-width:900px){
+        .project-row{
+          grid-template-columns:1.4fr 1fr;
+          align-items:center;
         }
-        
-        @keyframes swift-up {
-          to {
-            top: 0;
-          }
+
+        .reverse{
+          grid-template-columns:1fr 1.4fr;
         }
-        
-        @keyframes glow {
-          0% {
-            background-position: 0% 43%;
-          }
-          50% {
-            background-position: 100% 58%;
-          }
-          100% {
-            background-position: 0% 43%;
-          }
+      }
+
+      /* CARD */
+
+      .project-card{
+        width:100%;
+        border-radius:16px;
+        overflow:hidden;
+        position:relative;
+        cursor:pointer;
+        aspect-ratio:16/9;
+        transition:.35s;
+        border:1px solid rgba(168,131,90,0.3);
+      }
+
+      .project-card img{
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        transition:transform .5s;
+      }
+
+      .project-card:hover img{
+        transform:scale(1.05);
+      }
+
+      .overlay{
+        position:absolute;
+        inset:0;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        background:rgba(0,0,0,.45);
+        color:white;
+        opacity:0;
+        transition:.35s;
+      }
+
+      .project-card:hover .overlay{
+        opacity:1;
+      }
+
+      .overlay h3{
+        font-family:'Cormorant Garamond';
+        font-size:2rem;
+        letter-spacing:.05em;
+      }
+
+      .overlay span{
+        margin-top:6px;
+        font-size:.75rem;
+        letter-spacing:.15em;
+        text-transform:uppercase;
+      }
+
+      /* LABEL */
+
+      .card-label{
+        position:absolute;
+        bottom:14px;
+        left:14px;
+        background:rgba(0,0,0,.55);
+        backdrop-filter:blur(6px);
+        padding:6px 14px;
+        border-radius:40px;
+        font-size:.7rem;
+        letter-spacing:.12em;
+        text-transform:uppercase;
+        color:white;
+        font-family:'DM Sans';
+      }
+
+      /* INFO */
+
+      .info-card{
+        background:#efe6d8;
+        padding:36px;
+        border-radius:16px;
+        border:1px solid rgba(168,131,90,0.25);
+        box-shadow:0 8px 30px rgba(0,0,0,.08);
+      }
+
+      .info-title{
+        font-family:'Cormorant Garamond';
+        font-size:1.6rem;
+        margin-bottom:10px;
+      }
+
+      .info-text{
+        font-family:'DM Sans';
+        font-size:.95rem;
+        line-height:1.7;
+        color:#5c3a1e;
+      }
+
+      /* MOBILE */
+
+      @media(max-width:768px){
+
+        .project-row{
+          grid-template-columns:1fr;
         }
+
+        .info-card{
+          padding:22px;
+        }
+
+        .project-card{
+          aspect-ratio:4/3;
+        }
+
+      }
+
       `}</style>
-    </div>
+
+      <div>
+
+        <NavBar/>
+
+        <section className="hero">
+          <h1>
+            Building the future with innovative infrastructure solutions
+          </h1>
+        </section>
+
+        {/* SECTION 1 */}
+
+        <section className="section">
+
+          <h2 className="section-title">Infrastructure Projects</h2>
+
+          <div className="project-row">
+
+            <div
+              className="project-card"
+              onClick={()=>goToProject(1)}
+            >
+              <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=1400&auto=format&fit=crop"/>
+
+              <span className="card-label">Smart City</span>
+
+              <div className="overlay">
+                <h3>SMART CITY</h3>
+                <span>View Project</span>
+              </div>
+
+            </div>
+
+            <div className="info-card">
+
+              <h3 className="info-title">
+                METRO CORRIDOR
+              </h3>
+
+              <p className="info-text">
+                A 15km elevated metro corridor now connects major business districts across the city.
+                Eight modern stations feature smart ticketing and real-time information systems.
+                Commute times have been reduced by 45 minutes for thousands of daily passengers.
+                The corridor serves over 500,000 commuters each day with reliable service.
+              </p>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        {/* SECTION 2 */}
+
+        <section className="section">
+
+          <h2 className="section-title">
+            Construction & Consulting
+          </h2>
+
+          <div className="project-row reverse">
+
+            <div className="info-card">
+
+              <h3 className="info-title">
+                GREEN TOWER
+              </h3>
+
+              <p className="info-text">
+                This LEED-certified commercial tower was built using sustainable materials.
+                Energy-efficient HVAC systems reduce power consumption while maintaining
+                optimal indoor comfort. Solar panels and rainwater harvesting make the
+                building largely self-sufficient.
+              </p>
+
+            </div>
+
+            <div
+              className="project-card"
+              onClick={()=>goToProject(2)}
+            >
+
+              <img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=1400&auto=format&fit=crop"/>
+
+              <span className="card-label">
+                Business Hub
+              </span>
+
+              <div className="overlay">
+                <h3>BUSINESS HUB</h3>
+                <span>View Project</span>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        <Footer/>
+
+      </div>
+    </>
   );
+}
+
+function NavBar(){
+
+  const [open,setOpen] = useState(false)
+
+  return(
+    <>
+      
+
+      {open && (
+
+        <div style={{
+          position:"fixed",
+          inset:0,
+          background:"#efe6d8",
+          display:"flex",
+          flexDirection:"column",
+          justifyContent:"center",
+          alignItems:"center",
+          gap:"30px",
+          zIndex:999
+        }}>
+
+          <Link href="/" onClick={()=>setOpen(false)} className="nav-link">Home</Link>
+          <Link href="/services" onClick={()=>setOpen(false)} className="nav-link">Services</Link>
+          <Link href="/projects" onClick={()=>setOpen(false)} className="nav-link">Projects</Link>
+          <Link href="/contact" onClick={()=>setOpen(false)} className="nav-link">Contact</Link>
+
+        </div>
+
+      )}
+
+    </>
+  )
+}
+
+function Footer(){
+
+  return(
+
+    <footer style={{
+      borderTop:"1px solid rgba(168,131,90,0.25)",
+      padding:"30px",
+      marginTop:"40px",
+      display:"flex",
+      justifyContent:"space-between",
+      flexWrap:"wrap",
+      gap:"10px"
+    }}>
+
+      <span style={{
+        fontSize:".8rem",
+        color:"#a8835a",
+        fontFamily:"DM Sans"
+      }}>
+        © 2024 — All Rights Reserved
+      </span>
+
+      <span style={{
+        fontFamily:"Cormorant Garamond",
+        fontWeight:600,
+        color:"#4e2f10"
+      }}>
+        Infrastructure · Construction · Consulting
+      </span>
+
+    </footer>
+
+  )
 }

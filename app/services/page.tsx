@@ -7,7 +7,6 @@ export default function Services() {
   const lenisRef = useRef<any>(null);
 
   useEffect(() => {
-    // Load required libraries
     const initAnimations = async () => {
       // @ts-ignore
       const gsap = (await import("gsap")).default;
@@ -18,50 +17,38 @@ export default function Services() {
       
       gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-      // Try to initialize Lenis for smooth scrolling
       try {
-        // @ts-ignore - Completely ignore type checking for Lenis
+        // @ts-ignore
         const LenisModule = await import("@studio-freight/lenis");
         const Lenis = LenisModule.default;
         
-        // Use the most basic options that work across versions
         const lenis = new Lenis({
           duration: 1.2,
           easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-          // Only include options that are most likely to exist
           orientation: 'vertical',
           gestureOrientation: 'vertical',
         });
         
         lenisRef.current = lenis;
 
-        // Connect Lenis to ScrollTrigger
         lenis.on('scroll', () => {
           ScrollTrigger.update();
         });
 
-        // Use requestAnimationFrame to continuously update Lenis
         function raf(time: number) {
           lenis.raf(time);
           requestAnimationFrame(raf);
         }
         
         requestAnimationFrame(raf);
-
-        console.log("Lenis initialized successfully");
       } catch (e) {
         console.log("Smooth scrolling disabled, using native scroll");
       }
 
-      // Small delay to ensure DOM is ready
       setTimeout(() => {
-        // Kill any existing ScrollTriggers
         ScrollTrigger.getAll().forEach((st: any) => st.kill());
-        
-        // Refresh ScrollTrigger
         ScrollTrigger.refresh();
         
-        // Section 1 Animations
         gsap.timeline({
           scrollTrigger: {
             trigger: ".hero--1",
@@ -73,7 +60,6 @@ export default function Services() {
         .to(".hero--1 .hero__headline", { scale: 0.88 })
         .to(".hero--1 .hero__background", { scale: 0.89 }, "<");
 
-        // Pin hero 1
         gsap.to(".hero--1", {
           scrollTrigger: {
             trigger: ".hero--1",
@@ -86,7 +72,6 @@ export default function Services() {
           },
         });
 
-        // Thumbnail parallax animations
         gsap.utils.toArray<HTMLElement>(".thumbs__card").forEach((thumb, index) => {
           const img = thumb.querySelector("img");
           let yValue = "0%";
@@ -121,7 +106,6 @@ export default function Services() {
           }
         });
 
-        // Fade out hero 1 text and description
         gsap.timeline({
           scrollTrigger: {
             trigger: ".thumbs",
@@ -134,7 +118,6 @@ export default function Services() {
         .to(".hero--1 .hero__description", { opacity: 0, pointerEvents: "none" }, "<")
         .to(".hero--1 .explore-button", { opacity: 1, pointerEvents: "all" }, "<0.5");
 
-        // Section 2 Animations
         gsap.timeline({
           scrollTrigger: {
             trigger: ".hero--2",
@@ -146,7 +129,6 @@ export default function Services() {
         .to(".hero--2 .hero__headline", { scale: 0.88 })
         .to(".hero--2 .hero__background", { scale: 0.89 }, "<");
 
-        // Pin hero 2
         gsap.to(".hero--2", {
           scrollTrigger: {
             trigger: ".hero--2",
@@ -165,7 +147,6 @@ export default function Services() {
           },
         });
 
-        // Section 3 Animations - Marquee text
         gsap.timeline({
           scrollTrigger: {
             trigger: ".hero--3 .hero__headline",
@@ -176,7 +157,6 @@ export default function Services() {
         })
         .to(".hero--3 .hero__headline", { x: "-50%" });
 
-        // Pin hero 3
         gsap.to(".hero--3", {
           scrollTrigger: {
             trigger: ".hero--3",
@@ -188,7 +168,6 @@ export default function Services() {
           },
         });
 
-        // Color change for hero 3
         const hero3Tl = gsap.timeline({
           scrollTrigger: {
             trigger: ".hero--3 .hero__headline",
@@ -199,19 +178,16 @@ export default function Services() {
         });
         
         hero3Tl
-          .to(".hero--3 .hero__background", { background: "#4e2f10" }) // Brown background
-          .to(".hero--3 .hero__headline", { color: "#e8ddd0" }, "<"); // Cream text
+          .to(".hero--3 .hero__background", { background: "#4e2f10" })
+          .to(".hero--3 .hero__headline", { color: "#e8ddd0" }, "<");
 
-        // Refresh ScrollTrigger
         ScrollTrigger.refresh();
-        console.log("ScrollTrigger animations initialized");
       }, 500);
     };
 
     initAnimations();
 
     return () => {
-      // Cleanup
       if (lenisRef.current && lenisRef.current.destroy) {
         lenisRef.current.destroy();
       }
@@ -220,25 +196,12 @@ export default function Services() {
 
   return (
     <>
-      {/* Top Navigation Bar - Warm White */}
-      <nav className="fixed top-0 w-full shadow-md p-5 flex justify-center gap-10 font-semibold tracking-wide z-[100] border-b" style={{
-        backgroundColor: '#efe6d8',
-        color: '#4e2f10',
-        borderColor: '#a8835a'
-      }}>
-        <Link href="/" className="transition-colors" style={{ color: '#4e2f10' }}>Home</Link>
-        <Link href="/services" className="transition-colors" style={{ color: '#4e2f10' }}>Services</Link>
-        <Link href="/projects" className="transition-colors" style={{ color: '#4e2f10' }}>Projects</Link>
-        <Link href="/contact" className="transition-colors" style={{ color: '#4e2f10' }}>Contact</Link>
-      </nav>
-
       <div className="sticky-sections" style={{ background: '#e8ddd0' }}>
         {/* Section 1 - Infrastructure */}
         <section className="section section--1">
           <div className="hero hero--1">
             <div className="hero__content">
               <h1 className="hero__headline" style={{ color: '#2c1a0a' }}>Infrastructure</h1>
-              {/* Description text aligned below headline */}
               <p className="hero__description" style={{ color: '#7a5230' }}>
                 We are a professional company specializing in infrastructure development, 
                 construction, and building services. Our goal is to deliver high-quality 
@@ -246,7 +209,6 @@ export default function Services() {
                 team and strong technical expertise, we focus on building reliable and 
                 sustainable structures that support community growth and development.
               </p>
-              {/* Button container to center the button */}
               <div className="button-container">
                 <a href="#" className="button explore-button" style={{ 
                   color: '#2c1a0a', 
@@ -301,7 +263,6 @@ export default function Services() {
           </div>
         </section>
 
-        {/* Cream color gap between Infrastructure section and Our Vision section */}
         <div className="section-gap" style={{ 
           height: '60px', 
           backgroundColor: '#e8ddd0',
@@ -310,12 +271,10 @@ export default function Services() {
           zIndex: 5
         }}></div>
 
-        {/* Section 2 - Construction - WITH "OUR VISION" HEADING AND VISION TEXT */}
+        {/* Section 2 - Our Vision */}
         <section className="section section--2">
           <div className="hero hero--2">
-            {/* Changed from "Construction" to "Our Vision" */}
             <h1 className="hero__headline" style={{ color: '#2c1a0a' }}>Our Vision</h1>
-            {/* ADDED: Vision text paragraph */}
             <p className="hero__vision-text" style={{ color: '#7a5230' }}>
               To become a trusted name in infrastructure and construction by delivering 
               innovative solutions and maintaining long-term relationships with our clients.
@@ -352,11 +311,9 @@ export default function Services() {
         {/* Section 3 - Consulting */}
         <section className="section section--3">
           <div className="hero hero--3">
-            {/* Added padding-top to move the text down */}
             <div style={{ paddingTop: '25vh' }}>
               <h1 className="hero__headline" style={{ color: '#2c1a0a' }}>Strategic Consulting · Project Management · Technical Advisory · Risk Assessment · Value Engineering · Sustainability Consulting</h1>
             </div>
-            {/* Changed button text and added Link to contact page */}
             <Link href="/contact" className="button consulting-button" style={{ 
               color: '#2c1a0a', 
               borderColor: '#2c1a0a',
@@ -392,7 +349,6 @@ export default function Services() {
           background: #e8ddd0;
         }
 
-        /* Lenis styles if available */
         html.lenis {
           height: auto;
         }
@@ -409,10 +365,13 @@ export default function Services() {
           overflow: hidden;
         }
 
+        /* 
+          No margin-top needed here — the global Navbar is fixed+floating (pill),
+          it doesn't push content down. The hero fills 100vh from the very top.
+        */
         .sticky-sections {
           position: relative;
           width: 100%;
-          margin-top: 73px;
         }
 
         .section {
@@ -421,20 +380,9 @@ export default function Services() {
           min-height: 100vh;
         }
 
-        .section--1 {
-          background: #e8ddd0;
-          z-index: 1;
-        }
-
-        .section--2 {
-          background: #e8ddd0;
-          z-index: 2;
-        }
-
-        .section--3 {
-          background: #e8ddd0;
-          z-index: 3;
-        }
+        .section--1 { background: #e8ddd0; z-index: 1; }
+        .section--2 { background: #e8ddd0; z-index: 2; }
+        .section--3 { background: #e8ddd0; z-index: 3; }
 
         .container {
           max-width: 1400px;
@@ -555,13 +503,8 @@ export default function Services() {
           margin: 0 auto;
         }
 
-        .hero--2 .hero__background {
-          background: #a8835a;
-        }
-      
-        .hero--2 .hero__headline {
-          color: #2c1a0a;
-        }
+        .hero--2 .hero__background { background: #a8835a; }
+        .hero--2 .hero__headline   { color: #2c1a0a; }
 
         .hero--3 {
           justify-content: flex-start;
@@ -618,52 +561,20 @@ export default function Services() {
           will-change: transform;
         }
 
-        .thumbs__card:nth-child(1) {
-          grid-column: 4 / span 5;
-        }
+        .thumbs__card:nth-child(1) { grid-column: 4 / span 5; }
+        .thumbs__card:nth-child(1) .thumbs__card-picture { aspect-ratio: 16 / 9; width: 100%; }
 
-        .thumbs__card:nth-child(1) .thumbs__card-picture {
-          aspect-ratio: 16 / 9;
-          width: 100%;
-        }
+        .thumbs__card:nth-child(2) { grid-column: 2 / span 3; margin-top: 8rem; }
+        .thumbs__card:nth-child(2) .thumbs__card-picture { aspect-ratio: 4 / 3; width: 100%; }
 
-        .thumbs__card:nth-child(2) {
-          grid-column: 2 / span 3;
-          margin-top: 8rem;
-        }
+        .thumbs__card:nth-child(3) { grid-column: 8 / span 3; margin-top: -8rem; }
+        .thumbs__card:nth-child(3) .thumbs__card-picture { aspect-ratio: 3 / 4; width: 100%; }
 
-        .thumbs__card:nth-child(2) .thumbs__card-picture {
-          aspect-ratio: 4 / 3;
-          width: 100%;
-        }
+        .thumbs__card:nth-child(4) { grid-column: 3 / span 4; }
+        .thumbs__card:nth-child(4) .thumbs__card-picture { aspect-ratio: 1 / 1; width: 100%; }
 
-        .thumbs__card:nth-child(3) {
-          grid-column: 8 / span 3;
-          margin-top: -8rem;
-        }
-
-        .thumbs__card:nth-child(3) .thumbs__card-picture {
-          aspect-ratio: 3 / 4;
-          width: 100%;
-        }
-
-        .thumbs__card:nth-child(4) {
-          grid-column: 3 / span 4;
-        }
-
-        .thumbs__card:nth-child(4) .thumbs__card-picture {
-          aspect-ratio: 1 / 1;
-          width: 100%;
-        }
-
-        .thumbs__card:nth-child(5) {
-          grid-column: 7 / span 4;
-        }
-
-        .thumbs__card:nth-child(5) .thumbs__card-picture {
-          aspect-ratio: 16 / 9;
-          width: 100%;
-        }
+        .thumbs__card:nth-child(5) { grid-column: 7 / span 4; }
+        .thumbs__card:nth-child(5) .thumbs__card-picture { aspect-ratio: 16 / 9; width: 100%; }
 
         .thumbs__card-picture {
           width: 100%;
@@ -704,9 +615,7 @@ export default function Services() {
           font-weight: 400;
         }
 
-        .text__container {
-          grid-column: 4 / span 6;
-        }
+        .text__container { grid-column: 4 / span 6; }
 
         .services-headline {
           font-size: 2.5rem;
@@ -717,9 +626,7 @@ export default function Services() {
           padding-bottom: 1rem;
         }
 
-        .service-item {
-          margin-bottom: 2.5rem;
-        }
+        .service-item { margin-bottom: 2.5rem; }
 
         .service-title {
           font-size: 1.8rem;
@@ -735,15 +642,9 @@ export default function Services() {
           margin-bottom: 1rem;
         }
 
-        .text__container p {
-          margin-bottom: 2rem;
-        }
+        .text__container p { margin-bottom: 2rem; }
+        .text__container p:last-child { margin-bottom: 0; }
 
-        .text__container p:last-child {
-          margin-bottom: 0;
-        }
-
-        /* Section gap styling */
         .section-gap {
           height: 60px;
           background-color: #e8ddd0;
@@ -753,9 +654,7 @@ export default function Services() {
         }
 
         @media (max-width: 768px) {
-          .grid {
-            gap: 1.5rem;
-          }
+          .grid { gap: 1.5rem; }
           
           .thumbs__card:nth-child(1),
           .thumbs__card:nth-child(2),
@@ -766,13 +665,8 @@ export default function Services() {
             margin-top: 0;
           }
           
-          .text__container {
-            grid-column: span 12;
-          }
-          
-          .text {
-            font-size: 1.25rem;
-          }
+          .text__container { grid-column: span 12; }
+          .text { font-size: 1.25rem; }
           
           .hero--3 .hero__headline {
             padding-left: 2rem;
@@ -780,18 +674,9 @@ export default function Services() {
             font-size: clamp(2rem, 5vw, 3rem);
           }
           
-          .hero__headline {
-            font-size: clamp(2.5rem, 6vw, 4rem);
-          }
-
-          .hero__description {
-            font-size: 1rem;
-          }
-
-          .hero__vision-text {
-            font-size: 1.2rem;
-            padding: 0 1rem;
-          }
+          .hero__headline { font-size: clamp(2.5rem, 6vw, 4rem); }
+          .hero__description { font-size: 1rem; }
+          .hero__vision-text { font-size: 1.2rem; padding: 0 1rem; }
 
           .consulting-button {
             bottom: 15%;
@@ -802,21 +687,10 @@ export default function Services() {
             text-align: center;
           }
 
-          .services-headline {
-            font-size: 2rem;
-          }
-
-          .service-title {
-            font-size: 1.5rem;
-          }
-
-          .service-description {
-            font-size: 1rem;
-          }
-
-          .section-gap {
-            height: 40px;
-          }
+          .services-headline { font-size: 2rem; }
+          .service-title { font-size: 1.5rem; }
+          .service-description { font-size: 1rem; }
+          .section-gap { height: 40px; }
         }
       `}</style>
     </>
